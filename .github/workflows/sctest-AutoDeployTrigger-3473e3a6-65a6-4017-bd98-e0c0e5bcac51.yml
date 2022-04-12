@@ -7,7 +7,7 @@ on:
     branches: 
       [ main ]
     paths:
-    - 'aca-frontend/**'
+    - '**'
 
   # Allow mannually trigger 
   workflow_dispatch:      
@@ -26,7 +26,7 @@ jobs:
       - name: Log in to container registry
         uses: docker/login-action@v1
         with:
-          registry: docker.io
+          registry: xwang971reg.azurecr.io
           username: ${{ secrets.SCTEST_REGISTRY_USERNAME }}
           password: ${{ secrets.SCTEST_REGISTRY_PASSWORD }}
 
@@ -34,9 +34,9 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           push: true
-          tags: 1078233028/testimage:${{ github.sha }}
-          file: aca-frontend/Dockerfile
-          context: aca-frontend/
+          tags: xwang971reg.azurecr.io/newimage:${{ github.sha }}
+          file: ./Dockerfile
+          context: ./
 
 
   deploy:
@@ -57,5 +57,5 @@ jobs:
             echo "Installing containerapp extension"
             az config set extension.use_dynamic_install=yes_without_prompt
             echo "Starting Deploying"
-            az containerapp registry set -n sctest -g workerapps-rg-xj --server docker.io --username  ${{ secrets.SCTEST_REGISTRY_USERNAME }} --password ${{ secrets.SCTEST_REGISTRY_PASSWORD }}
-            az containerapp update -n sctest -g workerapps-rg-xj --image 1078233028/testimage:${{ github.sha }}
+            az containerapp registry set -n sctest -g workerapps-rg-xj --server xwang971reg.azurecr.io --username  ${{ secrets.SCTEST_REGISTRY_USERNAME }} --password ${{ secrets.SCTEST_REGISTRY_PASSWORD }}
+            az containerapp update -n sctest -g workerapps-rg-xj --image xwang971reg.azurecr.io/newimage:${{ github.sha }}
