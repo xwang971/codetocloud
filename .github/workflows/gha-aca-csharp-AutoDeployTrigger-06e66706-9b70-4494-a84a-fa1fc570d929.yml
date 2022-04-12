@@ -7,7 +7,7 @@ on:
     branches: 
       [ main ]
     paths:
-    - ''
+    - 'aca-csharp/**'
 
   # Allow mannually trigger 
   workflow_dispatch:      
@@ -35,8 +35,8 @@ jobs:
         with:
           push: true
           tags: antchuacr201907.azurecr.io/gha-aca-csharp:${{ github.sha }}
-          context: aca-csharp/Dockerfile
-
+          file: aca-csharp/Dockerfile
+          context: aca-csharp/
 
   deploy:
     runs-on: ubuntu-latest
@@ -53,8 +53,6 @@ jobs:
         uses: azure/CLI@v1
         with:
           inlineScript: |
-            echo "Installing containerapp extension"
-            az extension add --source https://containerappcli.blob.core.windows.net/containerapp/containerapp-0.1.3-py2.py3-none-any.whl --yes
-            echo "Starting Deploying"
+            az config set extension.use_dynamic_install=yes_without_prompt
             az containerapp registry set -n gha-aca-csharp -g demo --server antchuacr201907.azurecr.io --username  ${{ secrets.REGISTRY_USERNAME }} --password ${{ secrets.REGISTRY_PASSWORD }} --debug
             az containerapp update -n gha-aca-csharp -g demo --image antchuacr201907.azurecr.io/gha-aca-csharp:${{ github.sha }}
