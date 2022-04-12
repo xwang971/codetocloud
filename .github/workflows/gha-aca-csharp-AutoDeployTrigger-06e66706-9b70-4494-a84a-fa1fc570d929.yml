@@ -8,6 +8,7 @@ on:
       [ main ]
     paths:
     - 'aca-csharp/**'
+    - '.github/workflows/gha-aca-csharp-AutoDeployTrigger-06e66706-9b70-4494-a84a-fa1fc570d929.yml'
 
   # Allow mannually trigger 
   workflow_dispatch:      
