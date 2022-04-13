@@ -7,7 +7,7 @@ on:
     branches: 
       [ main ]
     paths:
-    - 'aca-frontend/bin/**'
+    - 'aca-frontend/**'
     - '.github/workflows/sctest-AutoDeployTrigger-3473e3a6-65a6-4017-bd98-e0c0e5bcac51.yml'
 
   # Allow mannually trigger 
