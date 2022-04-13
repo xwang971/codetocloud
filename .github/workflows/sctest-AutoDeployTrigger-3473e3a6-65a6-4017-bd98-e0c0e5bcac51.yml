@@ -36,8 +36,8 @@ jobs:
         with:
           push: true
           tags: xwang971reg.azurecr.io/euaptestimage:${{ github.sha }}
-          file: ./aca-frontend/bin/Dockerfile
-          context: ./aca-frontend/bin/
+          file: ./aca-frontend/Dockerfile
+          context: ./aca-frontend/
 
 
   deploy:
