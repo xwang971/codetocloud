@@ -7,7 +7,7 @@ on:
     branches: 
       [ main ]
     paths:
-    - 'aca-frontend/**'
+    - 'aca-frontend\test/**'
 
   # Allow mannually trigger 
   workflow_dispatch:      
@@ -35,8 +35,8 @@ jobs:
         with:
           push: true
           tags: xwang971reg.azurecr.io/eastussctest:${{ github.sha }}
-          file: aca-frontend/Dockerfile
-          context: aca-frontend/
+          file: aca-frontend/test/Dockerfile
+          context: aca-frontend/test/
 
 
   deploy:
