@@ -7,7 +7,7 @@ on:
     branches: 
       [ main ]
     paths:
-    - '**'
+    - 'aca-frontend/**'
     - '.github/workflows/test-xj-sc-AutoDeployTrigger-3be2bca4-3d9f-4d25-8129-6d7631479d9a.yml'
 
   # Allow mannually trigger 
@@ -35,9 +35,9 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           push: true
-          tags: 1078233028/test-xj-sc:${{ github.sha }}
-          file: ./Dockerfile
-          context: ./
+          tags: 1078233028/newtest:${{ github.sha }}
+          file: aca-frontend/Dockerfile
+          context: aca-frontend/
 
 
   deploy:
@@ -59,4 +59,4 @@ jobs:
             az config set extension.use_dynamic_install=yes_without_prompt
             echo "Starting Deploying"
             az containerapp registry set -n test-xj-sc -g workerapps-rg-xj --server docker.io --username  ${{ secrets.TESTXJSC_REGISTRY_USERNAME }} --password ${{ secrets.TESTXJSC_REGISTRY_PASSWORD }}
-            az containerapp update -n test-xj-sc -g workerapps-rg-xj --image 1078233028/test-xj-sc:${{ github.sha }}
+            az containerapp update -n test-xj-sc -g workerapps-rg-xj --image 1078233028/newtest:${{ github.sha }}
