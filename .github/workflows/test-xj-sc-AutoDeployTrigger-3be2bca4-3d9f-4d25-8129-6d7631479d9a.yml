@@ -7,7 +7,7 @@ on:
     branches: 
       [ main ]
     paths:
-    - 'aca-frontend/**'
+    - '**'
     - '.github/workflows/test-xj-sc-AutoDeployTrigger-3be2bca4-3d9f-4d25-8129-6d7631479d9a.yml'
 
   # Allow mannually trigger 
@@ -27,7 +27,7 @@ jobs:
       - name: Log in to container registry
         uses: docker/login-action@v1
         with:
-          registry: xwang971reg.azurecr.io
+          registry: docker.io
           username: ${{ secrets.TESTXJSC_REGISTRY_USERNAME }}
           password: ${{ secrets.TESTXJSC_REGISTRY_PASSWORD }}
 
@@ -35,9 +35,9 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           push: true
-          tags: xwang971reg.azurecr.io/newtest:${{ github.sha }}
-          file: aca-frontend/Dockerfile
-          context: aca-frontend/
+          tags: 1078233028/test-xj-sc:${{ github.sha }}
+          file: ./Dockerfile
+          context: ./
 
 
   deploy:
@@ -58,5 +58,5 @@ jobs:
             echo "Installing containerapp extension"
             az config set extension.use_dynamic_install=yes_without_prompt
             echo "Starting Deploying"
-            az containerapp registry set -n test-xj-sc -g workerapps-rg-xj --server xwang971reg.azurecr.io --username  ${{ secrets.secrets.TESTXJSC_REGISTRY_USERNAME }} --password ${{ secrets.secrets.TESTXJSC_REGISTRY_PASSWORD }}
-            az containerapp update -n test-xj-sc -g workerapps-rg-xj --image xwang971reg.azurecr.io/newtest:${{ github.sha }}
+            az containerapp registry set -n test-xj-sc -g workerapps-rg-xj --server docker.io --username  ${{ secrets.TESTXJSC_REGISTRY_USERNAME }} --password ${{ secrets.TESTXJSC_REGISTRY_PASSWORD }}
+            az containerapp update -n test-xj-sc -g workerapps-rg-xj --image 1078233028/test-xj-sc:${{ github.sha }}
