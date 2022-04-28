@@ -27,7 +27,7 @@ jobs:
       - name: Log in to container registry
         uses: docker/login-action@v1
         with:
-          registry: docker.io
+          registry: xwang971reg.azurecr.io
           username: ${{ secrets.TESTXJSC_REGISTRY_USERNAME }}
           password: ${{ secrets.TESTXJSC_REGISTRY_PASSWORD }}
 
@@ -35,7 +35,7 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           push: true
-          tags: 1078233028/newtest:${{ github.sha }}
+          tags: xwang971reg.azurecr.io/euaptestimage:${{ github.sha }}
           file: aca-frontend/Dockerfile
           context: aca-frontend/
 
@@ -58,5 +58,5 @@ jobs:
             echo "Installing containerapp extension"
             az config set extension.use_dynamic_install=yes_without_prompt
             echo "Starting Deploying"
-            az containerapp registry set -n test-xj-sc -g workerapps-rg-xj --server docker.io --username  ${{ secrets.TESTXJSC_REGISTRY_USERNAME }} --password ${{ secrets.TESTXJSC_REGISTRY_PASSWORD }}
-            az containerapp update -n test-xj-sc -g workerapps-rg-xj --image 1078233028/newtest:${{ github.sha }}
+            az containerapp registry set -n test-xj-sc -g workerapps-rg-xj --server xwang971reg.azurecr.io --username  ${{ secrets.TESTXJSC_REGISTRY_USERNAME }} --password ${{ secrets.TESTXJSC_REGISTRY_PASSWORD }}
+            az containerapp update -n test-xj-sc -g workerapps-rg-xj --image xwang971reg.azurecr.io/euaptestimage:${{ github.sha }}
