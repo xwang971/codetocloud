@@ -7,7 +7,7 @@ on:
     branches: 
       [ main ]
     paths:
-    - 'aca-frontend/**'
+    - '**'
     - '.github/workflows/app2-AutoDeployTrigger-486e3087-9365-4011-a851-0413fa622014.yml'
 
   # Allow mannually trigger 
@@ -36,8 +36,8 @@ jobs:
         with:
           push: true
           tags: xwang971reg.azurecr.io/gg:${{ github.sha }}
-          file: aca-frontend/Dockerfile
-          context: aca-frontend/
+          file: ./Dockerfile
+          context: ./
 
 
   deploy:
